@@ -1,5 +1,8 @@
 import mongodb from "mongodb" 
 const ObjectId = mongodb.ObjectId 
+// import dotenv from 'dotenv';
+
+
 let reviews 
 
 export default class ReviewsDAO{ 
@@ -14,6 +17,7 @@ export default class ReviewsDAO{
             console.error(`Unable to establish connection handle in reviewDAO: ${e}`) 
         } 
     } 
+
     static async addReview(movieId, user, review, date){
         try{
             const reviewDoc ={
@@ -21,7 +25,7 @@ export default class ReviewsDAO{
                 user_id: user._id, 
                 date: date, 
                 review: review, 
-                movie_id: ObjectID(movieId)
+                movie_id: ObjectId(movieId)
             }
             return await reviews.insertOne(reviewDoc)
         }
@@ -44,6 +48,7 @@ export default class ReviewsDAO{
             return {error: e}
         }
     }
+    
     static async deleteReview(reviewId, userId){
         try{
             const deleteResponse = await reviews.deleteOne(
